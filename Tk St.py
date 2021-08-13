@@ -33,6 +33,18 @@ def bg_color_change():
     win.config(bg=bgcolor)
 
 
+def rgb_color_rand():
+    s = [i for i in str(random.randint(100000, 1000000))]
+    w = ['a', 'b', 'c', 'd', 'f']
+    for i in range(1, 6, 2):
+        s[i] = random.choice(w)
+    bgcolor = '#' + ''.join(s)
+    return bgcolor
+
+def color_rand():
+    colors = ['red','blue', 'green', 'pink', 'yellow', 'white']
+    return random.choice(colors)
+
 
 win = tk.Tk()
 win.title('My app')
@@ -41,11 +53,17 @@ win.iconphoto(False, photo)
 win.geometry('800x600+500+200')
 win.config(bg='#8eb6ce')
 
-button1 = tk.Button(win, text='Нажмите на кнопку', command=counter)
-button2 = tk.Button(win, text='Изменяет фон', command=bg_color_change)
-button1.pack()
-button2.pack()
+ROW = 10
+COLUMN = 10
+def update_screen():
+    global ROW, COLUMN
+
+    for row in range(ROW):
+        for col in range(COLUMN):
+            tk.Button(win, text='    ', bg=f'{color_rand()}',
+                      command=update_screen).grid(row=row, column=col, stick='we')
+
+
+update_screen()
 
 win.mainloop()
-
-
